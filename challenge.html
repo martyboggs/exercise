@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --outline: black;
+        }
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+        .back {
+            padding: 30px;
+            background: #f3f3f3;
+            width: 620px;
+            margin: 0 auto;
+        }
+        table {
+            border-spacing: 0;
+            border: 1px solid var(--outline);
+            margin: 30px;
+        }
+        td {
+            border: 1px solid var(--outline);
+            position: relative;
+            width: 120px;
+            height: 100px;
+            text-align: center; 
+        }
+        td::before {
+            content: '';
+            position: absolute;
+            left: 0; 
+            top: 0;
+            font-size: 12px;
+            border: 1px solid var(--outline);
+            margin: -1px;
+            background: var(--outline);
+            color: white;
+            width: 21px;
+            height: 19px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div class="back">
+    <table class="calendar"></table>
+</div>
+<script>
+    var html = '';
+    var day = 1;
+    for (var i = 0; i < 6; i += 1) {
+        html += '<tr>';
+        for (var j = 0; j < 5; j += 1) {
+            html += `<td>
+                1 pull-up<br>
+                1 pull-up<br>
+                1 pull-up
+                </td>`;
+            document.head.innerHTML += `<style>.calendar tr:nth-child(${(i + 1)}) td:nth-child(${(j + 1)})::before { content: \'${day}\' }</style>`;
+            day += 1;
+        }
+        html += '</tr>';
+    }
+    document.querySelector('.calendar').innerHTML += html;
+</script>
+
+</body>
+</html>
