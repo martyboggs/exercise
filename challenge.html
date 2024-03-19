@@ -64,16 +64,10 @@
     <table class="calendar"></table>
 </div>
 <script>
-var urlParams = new URLSearchParams(window.location.search);
-var level = urlParams.get('level');
-var type = urlParams.get('type');
-if (type === 'pullup') document.querySelector('h1').innerHTML = 'Pull-Up Challenge';
-else if (type === 'pushup') document.querySelector('h1').innerHTML = 'Push-Up Challenge';
-var html = '';
-var events = [];
-if (type === 'pullup') {
-    if (level === '1') {
-        events = [
+var data = {
+    pullup: {
+        title: 'Pull-Up Challenge',
+        1: [
             '', '1 pull-up<br>1 pull-up<br>1 pull-up', '10 sit-ups<br>3 sets | 30sec rest', 
             '2 pull-ups<br>1 pull-up<br>1 pull-up', '10 sit-ups<br>3 sets | 30sec rest',
             '2 pull-ups<br>2 pull-ups<br>1 pull-up', '15 sit-ups<br>3 sets | 30sec rest',
@@ -89,9 +83,8 @@ if (type === 'pullup') {
             '8 pull-ups<br>4 pull-ups<br>3 pull-ups', '20 sit-ups<br>6 sets | 30sec rest',
             '9 pull-ups<br>4 pull-ups<br>2 pull-ups', '20 sit-ups<br>6 sets | 30sec rest',
             'rest day', '10 pull-ups<br>5 pull-ups<br>3 pull-ups',
-        ];
-    } else if (level === '2') {
-        events = [
+        ],
+        2: [
             '', '10 pull-ups<br>6 pull-ups<br>4 pull-ups', '20 sit-ups<br>3 sets<br>twice a day',
             '10 pull-ups<br>8 pull-ups<br>6 pull-ups', '20 sit-ups<br>3 sets<br>twice a day',
             '12 pull-ups<br>6 pull-ups<br>2 pull-ups', '25 sit-ups<br>3 sets<br>twice a day',
@@ -107,14 +100,50 @@ if (type === 'pullup') {
             '18 pull-ups<br>8 pull-ups<br>4 pull-ups', '20 sit-ups<br>3 sets<br>four times a day',
             '19 pull-ups<br>8 pull-ups<br>4 pull-ups', '20 sit-ups<br>3 sets<br>four times a day',
             'rest day', '20 pull-ups<br>8 pull-ups<br>6 pull-ups',
-        ];
+        ],
+        3: [
+            '', '10 pull-ups<br>6 pull-ups<br>4 pull-ups', '20 sit-ups<br>3 sets<br>twice a day',
+            '10 pull-ups<br>8 pull-ups<br>6 pull-ups', '20 sit-ups<br>3 sets<br>twice a day',
+            '12 pull-ups<br>6 pull-ups<br>2 pull-ups', '25 sit-ups<br>3 sets<br>twice a day',
+            '12 pull-ups<br>8 pull-ups<br>4 pull-ups', '25 sit-ups<br>3 sets<br>twice a day',
+            '14 pull-ups<br>6 pull-ups<br>4 pull-ups', '25 sit-ups<br>3 sets<br>twice a day',
+            '14 pull-ups<br>8 pull-ups<br>2 pull-ups', '20 sit-ups<br>4 sets<br>twice a day',
+            '15 pull-ups<br>6 pull-ups<br>2 pull-ups', '20 sit-ups<br>4 sets<br>twice a day',
+            '16 pull-ups<br>6 pull-ups<br>2 pull-ups', '20 sit-ups<br>3 sets<br>three times a day',
+            '16 pull-ups<br>6 pull-ups<br>4 pull-ups', '20 sit-ups<br>3 sets<br>three times a day',
+            '17 pull-ups<br>6 pull-ups<br>2 pull-ups', '20 sit-ups<br>3 sets<br>three times a day',
+            '17 pull-ups<br>6 pull-ups<br>4 pull-ups', '20 sit-ups<br>4 sets<br>three times a day',
+            '17 pull-ups<br>8 pull-ups<br>2 pull-ups', '20 sit-ups<br>4 sets<br>three times a day',
+            '18 pull-ups<br>8 pull-ups<br>4 pull-ups', '20 sit-ups<br>3 sets<br>four times a day',
+            '19 pull-ups<br>8 pull-ups<br>4 pull-ups', '20 sit-ups<br>3 sets<br>four times a day',
+            'rest day', '20 pull-ups<br>8 pull-ups<br>6 pull-ups',
+        ]
+    },
+    pushup: {
+        title: 'Push-Up Challenge',
+        1: [
+            '', '1 push-up<br>1 push-up<br>1 push-up', '10 sit-ups<br>3 sets | 30sec rest', 
+        ],
+        2: [
+            '', '1 push-up<br>1 push-up<br>1 push-up', '10 sit-ups<br>3 sets | 30sec rest', 
+        ],
+        3: [
+            '', '1 push-up<br>1 push-up<br>1 push-up', '10 sit-ups<br>3 sets | 30sec rest', 
+        ],
     }
-}
+};
+var urlParams = new URLSearchParams(window.location.search);
+var type = urlParams.get('type') || 'pullup';
+var level = urlParams.get('level') || '1';
+document.querySelector('title').innerHTML = data[type].title;
+document.querySelector('h1').innerHTML = data[type].title;
+var html = '';
+var events = [];
 var day = 1;
 for (var i = 0; i < 6; i += 1) {
     html += '<tr>';
     for (var j = 0; j < 5; j += 1) {
-        html += `<td>${events[day]}</td>`;
+        html += `<td>${data[type][level][day]}</td>`;
         document.head.innerHTML += `<style>.calendar tr:nth-child(${(i + 1)}) td:nth-child(${(j + 1)})::before { content: \'${day}\' }</style>`;
         day += 1;
     }
